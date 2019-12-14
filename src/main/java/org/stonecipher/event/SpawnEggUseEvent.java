@@ -21,17 +21,15 @@ public class SpawnEggUseEvent implements Listener {
 
     @EventHandler
     public void onSpawnEggUse(PlayerInteractEvent e){
-        if(e.getAction() == Action.RIGHT_CLICK_BLOCK && (e.getItem() != null) && eggTypes.contains(e.getItem().getType())) {
-            if (e.getItem().hasItemMeta()) {
-                e.setCancelled(true);
-                ItemStack replacement = new ItemStack(e.getItem().getType(), e.getItem().getAmount());
-                if (eggTypes.contains(e.getPlayer().getInventory().getItemInMainHand().getType())) {
-                    e.getPlayer().getInventory().setItemInMainHand(replacement);
-                } else {
-                    e.getPlayer().getInventory().setItemInOffHand(replacement);
-                }
-                e.getPlayer().sendMessage(ChatColor.RED + "The spawn eggs you were attempting to use have been replaced.");
+        if(e.getAction() == Action.RIGHT_CLICK_BLOCK && (e.getItem() != null) && eggTypes.contains(e.getItem().getType()) && e.getItem().hasItemMeta()) {
+            e.setCancelled(true);
+            ItemStack replacement = new ItemStack(e.getItem().getType(), e.getItem().getAmount());
+            if (eggTypes.contains(e.getPlayer().getInventory().getItemInMainHand().getType())) {
+                e.getPlayer().getInventory().setItemInMainHand(replacement);
+            } else {
+                e.getPlayer().getInventory().setItemInOffHand(replacement);
             }
+            e.getPlayer().sendMessage(ChatColor.RED + "The spawn eggs you were attempting to use have been replaced.");
         }
     }
 
